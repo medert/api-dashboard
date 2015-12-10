@@ -1,10 +1,7 @@
 <div class="small-6 small-offset-3 columns">
-  <div class="callout primary">
-    <h3>IP</h3>
-    <p>"<%= @ip %>"</p>
-  </div>
 
-  <div class="callout primary">
+
+  <div class="callout primary" id="location">
     <h3>Location</h3>
     <p>
       <%= @geolocation.city %>,
@@ -13,21 +10,21 @@
     </p>
   </div>
 
-  <div class="callout primary">
+  <div class="callout primary" id="temperature">
     <h3>Current Temperature</h3>
     <p>
       <%= @current_temp%>F
     </p>
   </div>
 
-  <div class="callout primary">
+  <div class="callout primary" id="events">
     <h3>Current Events</h3>
     <% @current_events.each do |event|%>
-      <p><%= event %></p>
+      <li><%= event %></li>
     <%end%>
   </div>
 
-  <div class="callout primary">
+  <div class="callout primary" id="headlines">
     <h3>News Headlines</h3>
     <%@current_headlines.each do |key, value|%>
       <li><a href=<%=value%>><%=key%></a></li>

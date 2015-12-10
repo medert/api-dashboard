@@ -82,10 +82,6 @@ class Headlines
     response = Net::HTTP.get_response(uri)
     headlines = JSON.parse(response.body)
 
-    headlines_list = []
-    headlines_url = []
-    headlines_arr = []
-
     headlines_hash = Hash.new()
 
     headlines.each do |headline|
