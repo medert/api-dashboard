@@ -1,0 +1,36 @@
+<div class="small-6 small-offset-3 columns">
+  <div class="callout primary">
+    <h3>IP</h3>
+    <p>"<%= @ip %>"</p>
+  </div>
+
+  <div class="callout primary">
+    <h3>Location</h3>
+    <p>
+      <%= @geolocation.city %>,
+      <%= @geolocation.state %>,
+      <%= @geolocation.country %>
+    </p>
+  </div>
+
+  <div class="callout primary">
+    <h3>Current Temperature</h3>
+    <p>
+      <%= @current_temp%>F
+    </p>
+  </div>
+
+  <div class="callout primary">
+    <h3>Current Events</h3>
+    <p>
+      <%= @current_event%>
+    </p>
+  </div>
+
+  <div class="callout primary">
+    <h3>News Headlines</h3>
+    <p>
+      <%= @current_event%>
+    </p>
+  </div>
+</div>
