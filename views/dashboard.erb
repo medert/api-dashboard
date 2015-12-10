@@ -22,15 +22,15 @@
 
   <div class="callout primary">
     <h3>Current Events</h3>
-    <p>
-      <%= @current_event%>
-    </p>
+    <% @current_events.each do |event|%>
+      <p><%= event %></p>
+    <%end%>
   </div>
 
   <div class="callout primary">
     <h3>News Headlines</h3>
-    <p>
-      <%= @current_event%>
-    </p>
+    <%@current_headlines.each do |key, value|%>
+      <li><a href=<%=value%>><%=key%></a></li>
+    <%end%>
   </div>
 </div>

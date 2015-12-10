@@ -18,9 +18,11 @@ class Dashboard < Sinatra::Base
     temp = Temp.new(@city,@state)
     @current_temp = temp.current
 
-    event = Event.new(@city,@state)
-    @current_event = event.current
+    events = Event.new(@city,@state)
+    @current_events = events.current
 
+    headlines = Headlines.new(@city,@state)
+    @current_headlines = headlines.current
 
     erb :dashboard
   end
@@ -39,11 +41,10 @@ class Temp
     response = Net::HTTP.get_response(uri)
     hourly_temps = JSON.parse(response.body)
 
-    return "#{hourly_temps["current_observation"]["temp_f"]}"
+    local_temp = "#{hourly_temps["current_observation"]["temp_f"]}"
+    return local_temp
   end
 end
-
-
 
 class Event
   def initialize(city, state)
@@ -53,11 +54,48 @@ class Event
 
   def current
 
-    key_1 = ENV["NYTIMES_API_KEY"]
-    uri = URI("http://api.nytimes.com/svc/events/v2/listings.json?query=#{@state}+and+#{@city}&api-key=#{key_1}")
+    uri = URI("http://api.seatgeek.com/2/events?venue.city=#{@city}")
     response = Net::HTTP.get_response(uri)
-    event = JSON.parse(response.body)
+    events = JSON.parse(response.body)["events"]
 
-    return event
+    events_list = []
+
+    events.each do |event|
+      events_list << "#{event["title"]} @ #{event["venue"]["name"]}"
+    end
+
+    return events_list
+
+  end
+end
+
+class Headlines
+  def initialize(city, state)
+    @city = city
+    @state = state
+  end
+
+  def current
+    ny_times_key = ENV["NYTIMES_API_KEY"]
+    uri =  URI("http://api.nytimes.com/svc/topstories/v1/technology.json?api-key=#{ny_times_key}")
+
+    response = Net::HTTP.get_response(uri)
+    headlines = JSON.parse(response.body)
+
+    headlines_list = []
+    headlines_url = []
+    headlines_arr = []
+
+    headlines_hash = Hash.new()
+
+    headlines.each do |headline|
+     headlines["results"].each do |item|
+        title = item["title"]
+        url = item["url"]
+        headlines_hash[title] = url
+     end
+    end
+
+    return headlines_hash
   end
 end
